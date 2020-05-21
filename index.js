@@ -38,11 +38,32 @@ Airplane.prototype.land = function () {
     - Give instances of Person a method `.toString()`:
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
-
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
+Person.prototype.eat = function(edible) {
+  if (this.stomach.length < 10) {
+    this.stomach.push(edible);
+  }
+};
+Person.prototype.poop = function() {
+  this.stomach = [];
+};
+Person.prototype.toString = function() {
+  return `${this.name}, ${this.age}`;
+};
+const personOne = new Person("Khwanchai", 35);
 
+console.log(personOne.toString());
+personOne.eat("Red curry");
+personOne.eat("White rice");
+personOne.eat("Papaya Salad");
+personOne.eat("Mango Stickyrice");
+console.log(personOne.stomach);
+personOne.poop();
+console.log(personOne.stomach);
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -57,9 +78,39 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
+Car.prototype.fill = function(gallons){ 
+  console.log(`${this.tank = this.tank+gallons}`);  
+}
+Car.prototype.constructor = new Car();
+const carOne = new Car({  
+    model: 'BatMobile',
+    milesPerGallon: 20,
+    tank: 0,
+    odometer: 0,
+});
+Car.prototype.drive = function(distance){
+  console.log(`${this.odometer = this.odometer+distance}`);
+  console.log(`${this.tank = this.tank-5}`);
+  console.log(`I ran out of fuel at ${this.odometer}`)
+ if(carOne.tank = 0){
+   return `${distance}`;
+ }
 
 }
+
+
+
+
+carOne.fill(10);
+carOne.drive();
+
+
 
 /*
   TASK 3
@@ -68,19 +119,42 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
+function Baby(name, age, favoriteToy) {
+  
+  this.name = name;
+  this.age = age;
+  this.favoriteToy = favoriteToy;
+  Person.call(this, name, age, favoriteToy);
+};
 
+  Baby.prototype = new Person();
+  // Baby.prototype.constructor = Baby;
+  Baby.prototype.play = function(){
+   return `Playing with ${this.favoriteToy}`;
 }
+
+const myBaby = new Baby({
+  name: 'Lucy',
+  age: 5,
+  favoriteToy: 'trains',
+});
+console.log(myBaby.play());
+
+
+
+
+
+
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
-*/
+  1. The "this" keyword is like English pronouns
+  2. "this" keyword use to point to the variable that we want to talk about.
+  3. "this" keyword can use to invorke the method.
+  4. "this" keyword can use to return the current class from the method.
+  */
 
 
 ///////// END OF CHALLENGE /////////
